@@ -92,7 +92,7 @@ char	*ft_apply_precision_num(char *s, t_flags flags, char format)
 		zeros = flags.precision - (len - 1);
 	if (zeros <= 0)
 		return (ft_add_prefix(s, flags, format));
-	return (ft_create_precision_str(s, zeros, flags, format));
+	return (ft_create_p_str(s, zeros, flags, format));
 }
 
 char	*ft_add_prefix(char *s, t_flags flags, char format)
