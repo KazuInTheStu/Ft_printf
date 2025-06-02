@@ -6,7 +6,7 @@
 /*   By: ilaamari <ilaamari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:18:54 by ilaamari          #+#    #+#             */
-/*   Updated: 2025/06/02 17:21:40 by ilaamari         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:35:06 by ilaamari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static t_flags	fthc(t_flags flags, const char *format, int *i, va_list args)
 		flags.dot = 1;
 		(*i)++;
 		flags.precision = ft_parse_precision(format, i, args);
-		if (flags.precision >= 0) 
+		if (flags.precision >= 0)
 			flags.has_precision = 1;
 		return (flags);
 	}
