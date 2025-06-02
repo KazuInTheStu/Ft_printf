@@ -1,69 +1,106 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 00:00:00 by student           #+#    #+#             */
+/*   Updated: 2025/06/02 00:00:00 by student          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
-
-static int	ft_dispatch_more(const char **f, va_list args,
-	int width, int minus, int zero, int hash)
-{
-	if (**f == 'x')
-		return (ft_handle_hex(va_arg(args, unsigned int), 0,
-				width, minus, zero, hash));
-	if (**f == 'X')
-		return (ft_handle_hex(va_arg(args, unsigned int), 1,
-				width, minus, zero, hash));
-	if (**f == 'p')
-		return (ft_handle_ptr(va_arg(args, unsigned long long), width, minus));
-	if (**f == '%')
-		return (ft_handle_char('%', width, minus));
-	return (0);
-}
-
-static int	ft_dispatch(const char **f, va_list args)
-{
-	int	width;
-	int	minus;
-	int	zero;
-	int	plus;
-	int	space;
-	int	hash;
-
-	width = 0;
-	minus = 0;
-	zero = 0;
-	plus = 0;
-	space = 0;
-	hash = 0;
-	ft_parse_flags(f, &width, &minus, &zero, &plus, &space, &hash);
-	if (**f == 'c')
-		return (ft_handle_char(va_arg(args, int), width, minus));
-	if (**f == 's')
-		return (ft_handle_str(va_arg(args, char *), width, minus));
-	if (**f == 'd' || **f == 'i')
-		return (ft_handle_int(va_arg(args, int), width, minus, zero, plus, space));
-	if (**f == 'u')
-		return (ft_handle_unsigned(va_arg(args, unsigned int),
-				width, minus, zero));
-	return (ft_dispatch_more(f, args, width, minus, zero, hash));
-}
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		i;
 	int		count;
+	int		i;
 
+	if (!format)
+		return (-1);
 	va_start(args, format);
-	i = 0;
 	count = 0;
+	i = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%')
 		{
 			i++;
-			count += ft_dispatch(&format + i, args);
+			count += ft_parse_format(format, args, &i);
 		}
 		else
-			count += write(1, &format[i], 1);
-		i++;
+		{
+			count += ft_putchar_fd(format[i], 1);
+			i++;
+		}
 	}
 	va_end(args);
 	return (count);
 }
+
+int	ft_parse_format(const char *format, va_list args, int *i)
+{
+	t_flags	flags;
+
+	flags = ft_parse_flags(format, i, args);
+	if (format[*i] && ft_strchr("cspdiuxX%", format[*i]))
+	{
+		(*i)++;
+		return (ft_handle_conversion(format[(*i) - 1], args, flags));
+	}
+	return (0);
+}
+
+t_flags	ft_init_flags(void)
+{
+	t_flags	flags;
+
+	flags.minus = 0;
+	flags.zero = 0;
+	flags.dot = 0;
+	flags.hash = 0;
+	flags.space = 0;
+	flags.plus = 0;
+	flags.width = 0;
+	flags.precision = 0;
+	flags.has_precision = 0;
+	return (flags);
+}
+
+static t_flags	ft_handle_flag_char(t_flags flags, const char *format, int *i, va_list args)
+{
+	if (format[*i] == '-')
+		flags.minus = 1;
+	else if (format[*i] == '0')
+		flags.zero = 1;
+	else if (format[*i] == '.')
+	{
+		flags.dot = 1;
+		(*i)++;
+		flags.precision = ft_parse_precision(format, i, args);
+		flags.has_precision = 1;
+		return (flags);
+	}
+	else if (format[*i] == '#')
+		flags.hash = 1;
+	else if (format[*i] == ' ')
+		flags.space = 1;
+	else if (format[*i] == '+')
+		flags.plus = 1;
+	(*i)++;
+	return (flags);
+}
+
+t_flags	ft_parse_flags(const char *format, int *i, va_list args)
+{
+	t_flags	flags;
+
+	flags = ft_init_flags();
+	while (format[*i] && ft_strchr("-0.# +", format[*i]))
+		flags = ft_handle_flag_char(flags, format, i, args);
+	flags.width = ft_parse_width(format, i, args);
+	return (flags);
+}
+
