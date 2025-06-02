@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_bonus2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilaamari <ilaamari@42nice.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 13:18:31 by ilaamari          #+#    #+#             */
+/*   Updated: 2025/06/02 13:18:31 by ilaamari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-char	*ft_fill_precision(char *new_str, char *s, int zeros, t_flags flags)
+char	*ft_fill_p(char *new_str, char *s, int zeros, t_flags flags)
 {
 	int	i;
 	int	j;
@@ -49,7 +61,7 @@ char	*ft_fill_prefix(char *new_str, char *s, t_flags flags, char format)
 	return (new_str);
 }
 
-char	*ft_create_precision_str(char *s, int zeros, t_flags flags, char format)
+char	*ft_create_p_str(char *s, int zeros, t_flags flags, char format)
 {
 	char	*new_str;
 	int		len;

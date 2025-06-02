@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: ilaamari <ilaamari@42nice.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 13:18:54 by ilaamari          #+#    #+#             */
+/*   Updated: 2025/06/02 13:18:54 by ilaamari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 00:00:00 by student           #+#    #+#             */
@@ -69,7 +81,7 @@ t_flags	ft_init_flags(void)
 	return (flags);
 }
 
-static t_flags	ft_handle_flag_char(t_flags flags, const char *format, int *i, va_list args)
+static t_flags	fthc(t_flags flags, const char *format, int *i, va_list args)
 {
 	if (format[*i] == '-')
 		flags.minus = 1;
@@ -99,8 +111,7 @@ t_flags	ft_parse_flags(const char *format, int *i, va_list args)
 
 	flags = ft_init_flags();
 	while (format[*i] && ft_strchr("-0.# +", format[*i]))
-		flags = ft_handle_flag_char(flags, format, i, args);
+		flags = fthc(flags, format, i, args);
 	flags.width = ft_parse_width(format, i, args);
 	return (flags);
 }
-

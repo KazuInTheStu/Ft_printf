@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilaamari <ilaamari@42nice.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 13:19:02 by ilaamari          #+#    #+#             */
+/*   Updated: 2025/06/02 13:19:02 by ilaamari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
@@ -47,8 +59,8 @@ char	*ft_apply_precision_str(char *s, t_flags flags);
 char	*ft_apply_precision_num(char *s, t_flags flags, char format);
 char	*ft_strcat(char *dest, const char *src);
 char	*ft_add_prefix(char *s, t_flags flags, char format);
-char	*ft_fill_precision(char *new_str, char *s, int zeros, t_flags flags);
+char	*ft_fill_p(char *new_str, char *s, int zeros, t_flags flags);
 char	*ft_fill_prefix(char *new_str, char *s, t_flags flags, char format);
-char	*ft_create_precision_str(char *s, int zeros, t_flags flags, char format);
+char	*ft_create_p_str(char *s, int zeros, t_flags flags, char format);
 
 #endif

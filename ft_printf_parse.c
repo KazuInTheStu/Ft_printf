@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_parse.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilaamari <ilaamari@42nice.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 13:18:49 by ilaamari          #+#    #+#             */
+/*   Updated: 2025/06/02 13:18:49 by ilaamari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	ft_parse_width(const char *format, int *i, va_list args)
@@ -18,7 +30,9 @@ int	ft_parse_width(const char *format, int *i, va_list args)
 			(*i)++;
 		}
 	}
-	return (width < 0 ? 0 : width);
+	if (width < 0)
+		width = 0;
+	return (width);
 }
 
 int	ft_parse_precision(const char *format, int *i, va_list args)
