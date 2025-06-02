@@ -64,9 +64,8 @@ int	ft_print_pointer(void *ptr, t_flags flags)
 	int		count;
 
 	if (!ptr)
-		hex_str = ft_htoa(0, 'x');
-	else
-		hex_str = ft_htoa((unsigned long)ptr, 'x');
+		return (ft_print_string("(nil)", flags));
+	hex_str = ft_htoa((unsigned long)ptr, 'x');
 	len = ft_strlen(hex_str) + 2;
 	str = malloc(len + 1);
 	if (!str)

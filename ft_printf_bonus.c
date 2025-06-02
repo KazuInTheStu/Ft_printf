@@ -100,14 +100,18 @@ char	*ft_add_prefix(char *s, t_flags flags, char format)
 	char	*new_str;
 	int		len;
 	int		prefix_len;
+	int		is_zero;
 
 	len = ft_strlen(s);
 	prefix_len = 0;
+	is_zero = (len == 1 && s[0] == '0')
+		|| (len == 2 && s[0] == '+' && s[1] == '0')
+		|| (len == 2 && s[0] == '-' && s[1] == '0');
 	if (flags.plus && s[0] != '-' && (format == 'd' || format == 'i'))
 		prefix_len = 1;
 	else if (flags.space && s[0] != '-' && (format == 'd' || format == 'i'))
 		prefix_len = 1;
-	else if (flags.hash && s[0] != '0' && (format == 'x' || format == 'X'))
+	else if (flags.hash && !is_zero && (format == 'x' || format == 'X'))
 		prefix_len = 2;
 	if (prefix_len == 0)
 		return (s);
