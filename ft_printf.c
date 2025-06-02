@@ -92,7 +92,8 @@ static t_flags	fthc(t_flags flags, const char *format, int *i, va_list args)
 		flags.dot = 1;
 		(*i)++;
 		flags.precision = ft_parse_precision(format, i, args);
-		flags.has_precision = 1;
+		if (flags.precision >= 0) 
+			flags.has_precision = 1;
 		return (flags);
 	}
 	else if (format[*i] == '#')

@@ -39,6 +39,12 @@ int	ft_apply_width(char *str, t_flags flags, int len)
 		count += ft_putstr_fd(str, 1);
 		count += ft_print_padding(flags.width - len, ' ');
 	}
+	else if (pad_char == '0' && str[0] == '-')
+	{
+		count += ft_putchar_fd('-', 1);
+		count += ft_print_padding(flags.width - len, '0');
+		count += ft_putstr_fd(str + 1, 1);
+	}
 	else
 	{
 		count += ft_print_padding(flags.width - len, pad_char);
